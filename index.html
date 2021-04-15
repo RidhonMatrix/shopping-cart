@@ -16,26 +16,26 @@
       <div class="container">
          <div class="cart">
             <div class="col-md-12 col-lg-10 mx-auto">
-               <div class="cart-item">
+               <div class="cart-item" id="iphone">
                   <div class="row">
                      <div class="col-md-7 center-item">
                         <img src="images/product-1.png" alt="">
                         <h5>iPhone 11 128GB Black</h5>
                      </div>
 
-                     <div class="col-md-5 center-item">
+                     <div class="col-md-5 center-item" >
                         <div class="input-group number-spinner">
-                           <button class="btn btn-default"><i class="fas fa-minus"></i></button>
+                           <button class="btn btn-default minusBtn" ><i class="fas fa-minus"></i></button>
                            <input type="text" class="form-control text-center" value="1">
-                           <button class="btn btn-default"><i class="fas fa-plus"></i></button>
+                           <button class="btn btn-default plusBtn" ><i class="fas fa-plus"></i></button>
                         </div>
-                        <h5>$1219</h5>
+                        <h5>$<span class="price">1219</span></h5>
                         <img src="images/remove.png" alt="" class="remove-item">
                      </div>
                   </div>
                </div>
 
-               <div class="cart-item">
+               <div class="cart-item" id="phoneCase">
                   <div class="row">
                      <div class="col-md-7 center-item mx-auto">
                         <img src="images/product-2.png" alt="">
@@ -43,12 +43,12 @@
                      </div>
                      <div class="col-md-5 center-item">
                         <div class="input-group number-spinner">
-                           <button class="btn btn-default"><i class="fas fa-minus"></i></button>
-                           <input type="text" class="form-control text-center" value="1">
-                           <button class="btn btn-default"><i class="fas fa-plus"></i></button>
+                           <button class="btn btn-default minusBtn"><i class="fas fa-minus"></i></button>
+                           <input type="text" class="form-control text-center"  value="1">
+                           <button class="btn btn-default plusBtn"><i class="fas fa-plus"></i></button>
 
                         </div>
-                        <h5>$59</h5>
+                        <h5>$<span class="price">59</span></h5>
                         <img src="images/remove.png" alt="" class="remove-item">
                      </div>
                   </div>
@@ -64,9 +64,9 @@
                      </div>
 
                      <div class="col-md-4 status">
-                        <h5>$1,278</h5>
-                        <h5>$0</h5>
-                        <h5>$1,278</h5>
+                        <h5>$<span id="sub-total">1,278</span></h5>
+                        <h5>$<span id="tax">0</span></h5>
+                        <h5>$<span id="final-total">1,278</span></h5>
                      </div>
                   </div>
                </div>
@@ -77,6 +77,72 @@
          </div>
       </div>
    </section>
+   <script>
+
+      function getQuantity(parentId){
+         const quantity=document.querySelector(parentId+ " input").value;
+         const quantityNumber=parseFloat(quantity);
+         return quantityNumber;
+      }
+
+      function getPrice(parentId){
+         const price=document.querySelector(parentId+ " .price").innerText;
+         const priceNumber=parseFloat(price);
+         return priceNumber;
+      }
+
+      function setQuantity(parentId,value){
+         document.querySelector(parentId+ " input").value=value;
+      }
+
+      function setPrice(parentId,value){
+         document.querySelector(parentId+ " .price").innerText=value;
+      }
+      function setSubTotal(value){
+         document.getElementById('sub-total').innerText=value;
+      }
+      function cartPlusMinusBtn(parentId,obj){
+            const minusBtn = document.querySelector(parentId+ " .minusBtn");
+            minusBtn.addEventListener('click',function(){
+               if(obj.quantity>1){
+                  obj.quantity-=1;
+                  obj.totalPrice-=obj.price;
+                  subTotal-=obj.price;
+                  setSubTotal(subTotal);
+                  setPrice(parentId,obj.totalPrice);
+                  setQuantity(parentId,obj.quantity);
+               }
+            })
+
+            const plusBtn = document.querySelector(parentId+ " .plusBtn");
+            plusBtn.addEventListener('click',function(){
+               obj.quantity+=1;
+               obj.totalPrice+=obj.price;
+               subTotal+=obj.price;
+               setSubTotal(subTotal);
+               setPrice(parentId,obj.totalPrice);
+               setQuantity(parentId,obj.quantity);
+            })
+      }
+      
+      
+      
+      var iphone={
+         price: getPrice("#iphone"),
+         quantity: getQuantity("#iphone"),
+         totalPrice: getPrice("#iphone")
+      };
+      var phoneCase={
+         price: getPrice("#phoneCase"),
+         quantity: getQuantity("#phoneCase"),
+         totalPrice: getPrice("#phoneCase")
+      };
+      var subTotal=iphone.totalPrice+phoneCase.totalPrice;
+      var tax=0;
+      var finalTotal=0;
+      cartPlusMinusBtn("#iphone",iphone);
+      cartPlusMinusBtn("#phoneCase",phoneCase);
+   </script>
 </body>
 
 </html>
