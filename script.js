@@ -112,7 +112,9 @@ function removeItem(parent, item) {
       resetCalculation(phoneCase);
       totalItems.pop();
    }
-
+   if(totalItems.length==0){
+      document.getElementById('check-out').style.display="none";
+   }
 }
 
 //remove button
