@@ -53,3 +53,6 @@ body{
 	background-color: #2FBE70;
 	border: none;
 }
+.remove-item{
+	cursor: pointer;
+}
